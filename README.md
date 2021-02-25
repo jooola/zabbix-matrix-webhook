@@ -32,6 +32,10 @@ In the room settings page, open the `Advanced` tab and retreive the `Internal ro
 
 ![](docs/matrix_room_id1.png)
 
+Sign in the bot account and accept the invitation to the room.
+
+> An auto join feature might be implemented in the future.
+
 ## Zabbix webhook configuration
 
 Import the [`media_matrix.yml`](media_matrix.yml) file into your zabbix installation.

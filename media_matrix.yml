@@ -5,237 +5,148 @@ zabbix_export:
     - name: Matrix
       type: WEBHOOK
       parameters:
-        - name: server_url
-          value: "<server_url>"
-        - name: room_id
-          value: "{ALERT.SENDTO}"
+        - name: server
+          value: "<server>"
         - name: token
           value: "<token>"
+        - name: room
+          value: "{ALERT.SENDTO}"
 
-        - name: event_date
-          value: "{EVENT.DATE}"
-        - name: event_time
-          value: "{EVENT.TIME}"
-        - name: event_age
-          value: "{EVENT.AGE}"
-        - name: event_duration
-          value: "{EVENT.DURATION}"
-        - name: event_id
-          value: "{EVENT.ID}"
-        - name: event_name
-          value: "{EVENT.NAME}"
-        - name: event_value
-          value: "{EVENT.VALUE}"
-        - name: event_severity
-          value: "{EVENT.SEVERITY}"
-        - name: event_nseverity
+        - name: message
+          value: "{ALERT.MESSAGE}"
+        - name: severity
           value: "{EVENT.NSEVERITY}"
-        - name: event_opdata
-          value: "{EVENT.OPDATA}"
-        - name: event_status
-          value: "{EVENT.STATUS}"
-        - name: event_ack_status
-          value: "{EVENT.ACK.STATUS}"
-        - name: event_recovery_date
-          value: "{EVENT.RECOVERY.DATE}"
-        - name: event_recovery_time
-          value: "{EVENT.RECOVERY.TIME}"
-        - name: event_update_date
-          value: "{EVENT.UPDATE.DATE}"
-        - name: event_update_time
-          value: "{EVENT.UPDATE.TIME}"
-        - name: event_update_action
-          value: "{EVENT.UPDATE.ACTION}"
-        - name: event_update_message
-          value: "{EVENT.UPDATE.MESSAGE}"
-        - name: host_name
-          value: "{HOST.NAME}"
-        - name: trigger_url
-          value: "{TRIGGER.URL}"
-        - name: user_fullname
-          value: "{USER.FULLNAME}"
+        - name: is_problem
+          value: "{EVENT.VALUE}"
+        - name: is_update
+          value: "{EVENT.UPDATE.STATUS}"
+
       message_templates:
         - event_source: TRIGGERS
           operation_mode: PROBLEM
           subject: "Problem: {EVENT.NAME}"
-          message: ""
+          message: |
+            Problem started at {EVENT.TIME} on {EVENT.DATE}
+            Problem name: {EVENT.NAME}
+            Host: {HOST.NAME}
+            Severity: {EVENT.SEVERITY}
+            Operational data: {EVENT.OPDATA}
+            Original problem ID: {EVENT.ID}
+            {TRIGGER.URL}
         - event_source: TRIGGERS
           operation_mode: RECOVERY
           subject: "Resolved in {EVENT.DURATION}: {EVENT.NAME}"
-          message: ""
+          message: |
+            Problem has been resolved at {EVENT.RECOVERY.TIME} on {EVENT.RECOVERY.DATE}
+            Problem name: {EVENT.NAME}
+            Problem duration: {EVENT.DURATION}
+            Host: {HOST.NAME}
+            Severity: {EVENT.SEVERITY}
+            Original problem ID: {EVENT.ID}
+            {TRIGGER.URL}
         - event_source: TRIGGERS
           operation_mode: UPDATE
           subject: "Updated problem in {EVENT.AGE}: {EVENT.NAME}"
-          message: ""
-      script: |
-        var Data = {
-            server_url: null, // "<server_url>"
-            room_id: null, // "{ALERT.SENDTO}"
-            token: null, // "<token>"
-            event_date: null, // "{EVENT.DATE}"
-            event_time: null, // "{EVENT.TIME}"
-            event_age: null, // "{EVENT.AGE}"
-            event_duration: null, // "{EVENT.DURATION}"
-            event_id: null, // "{EVENT.ID}"
-            event_name: null, // "{EVENT.NAME}"
-            event_value: null, // "{EVENT.VALUE}"
-            event_severity: null, // "{EVENT.SEVERITY}"
-            event_nseverity: null, // "{EVENT.NSEVERITY}"
-            event_opdata: null, // "{EVENT.OPDATA}"
-            event_status: null, // "{EVENT.STATUS}"
-            event_ack_status: null, // "{EVENT.ACK.STATUS}"
-            event_recovery_date: null, // "{EVENT.RECOVERY.DATE}"
-            event_recovery_time: null, // "{EVENT.RECOVERY.TIME}"
-            event_update_date: null, // "{EVENT.UPDATE.DATE}"
-            event_update_time: null, // "{EVENT.UPDATE.TIME}"
-            event_update_action: null, // "{EVENT.UPDATE.ACTION}"
-            event_update_message: null, // "{EVENT.UPDATE.MESSAGE}"
-            host_name: null, // "{HOST.NAME}"
-            trigger_url: null, // "{TRIGGER.URL}"
-            user_fullname: null, // "{USER.FULLNAME}"
-        }
+          message: |
+            {USER.FULLNAME} {EVENT.UPDATE.ACTION} problem at {EVENT.UPDATE.DATE} {EVENT.UPDATE.TIME}
+            {EVENT.UPDATE.MESSAGE}
 
-        const update_color = "#d2d2d2"
-        const recovery_color = "#86cc89"
-        const severity_colors = [
-            "#97aab3", // Not classified
-            "#7499ff", // Information
-            "#ffc859", // Warning
-            "#ffa059", // Average
-            "#e97659", // High
-            "#e45959", // Disaster
+            Current problem status: {EVENT.STATUS}
+            Age: {EVENT.AGE}
+            Acknowledged: {EVENT.ACK.STATUS}
+      script: |
+        const input = [
+            'server',
+            'room',
+            'token',
+
+            'message',
+            'severity',
+            'is_problem',
+            'is_update',
         ]
 
-        function problem_plain(it) {
-            return "Problem started at " + it.event_time + " on " + it.event_date + "\n"
-                + "Problem name: " + it.event_name + "\n"
-                + "Host: " + it.host_name + "\n"
-                + "Severity: " + it.event_severity + "\n"
-                + "Operational data: " + it.event_opdata + "\n"
-                + "Original problem ID: " + it.event_id + "\n"
-                + it.trigger_url;
-        };
-
-        function problem_html(it) {
-            return "<span data-mx-color='" + severity_colors[it.event_nseverity] + "'>"
-                + "<b>Problem started</b> at " + it.event_time + " on " + it.event_date + "<br>"
-                + "<b>Problem name:</b> " + it.event_name + "<br>"
-                + "<b>Host:</b> " + it.host_name + "<br>"
-                + "<b>Severity:</b> " + it.event_severity + "<br>"
-                + "<b>Operational data:</b> " + it.event_opdata + "<br>"
-                + "<b>Original problem ID:</b> " + it.event_id + "<br>"
-                + it.trigger_url
-                + "</span>";
-        };
-
-        function recovery_plain(it) {
-            return "Problem has been resolved at " + it.event_recovery_time + " on " + it.event_recovery_date + "\n"
-                + "Problem name: " + it.event_name + "\n"
-                + "Problem duration: " + it.event_duration + "\n"
-                + "Host: " + it.host_name + "\n"
-                + "Severity: " + it.event_severity + "\n"
-                + "Original problem ID: " + it.event_id + "\n"
-                + it.trigger_url;
-        };
-
-        function recovery_html(it) {
-            return "<span data-mx-color='" + recovery_color + "'>"
-                + "<b>Problem has been resolved</b> at " + it.event_recovery_time + " on " + it.event_recovery_date + "<br>"
-                + "<b>Problem name:</b> " + it.event_name + "<br>"
-                + "<b>Problem duration:</b> " + it.event_duration + "<br>"
-                + "<b>Host:</b> " + it.host_name + "<br>"
-                + "<b>Severity:</b> " + it.event_severity + "<br>"
-                + "<b>Original problem ID:</b> " + it.event_id + "<br>"
-                + it.trigger_url
-                + "</span>";
-        };
-
-        function update_plain(it) {
-            return it.user_fullname + " " + it.event_update_action + " problem at " + it.event_update_date + " " + it.event_update_time + "\n"
-                + it.event_update_message + "\n"
-                + "\n"
-                + "Current problem status: " + it.event_status + "\n"
-                + "Age: " + it.event_age + "\n"
-                + "Acknowledged: " + it.event_ack_status;
-        };
-
-        function update_html(it) {
-            return "<span data-mx-color='" + update_color + "'>"
-                + "<b>" + it.user_fullname + " " + it.event_update_action + " problem</b> at " + it.event_update_date + " " + it.event_update_time + "<br>"
-                + "<code>" + it.event_update_message + "</code><br>"
-                + "<br>"
-                + "<b>Current problem status:</b> " + it.event_status + "<br>"
-                + "<b>Age:</b> " + it.event_age + "<br>"
-                + "<b>Acknowledged:</b> " + it.event_ack_status
-                + "<span>";
-        };
+        const update_color = '#d2d2d2'
+        const recovery_color = '#86cc89'
+        const severity_colors = [
+            '#97aab3', // Not classified
+            '#7499ff', // Information
+            '#ffc859', // Warning
+            '#ffa059', // Average
+            '#e97659', // High
+            '#e45959', // Disaster
+        ]
 
         var Matrix = {
             validate: function (params) {
-                Object.keys(Data).forEach(function (key) {
+                input.forEach(function (key) {
                     if (key in params && params[key] != undefined) {
-                        Object.defineProperty(Matrix, key, { value: params[key] })
+                        Matrix[key] = params[key]
                     } else {
-                        throw {
-                            name: "MissingValueError",
-                            message: "Missing value for key: " + key
-                        }
+                        throw 'Missing value for key: ' + key
                     }
                 })
 
-                if (Matrix.event_value == 1 && Matrix.event_update_status == 0) {
-                    Matrix.templates = { plain: problem_plain, html: problem_html }
-                } else if (Matrix.event_value == 1 && Matrix.event_update_status == 1) {
-                    Matrix.templates = { plain: update_plain, html: update_html }
-                } else if (Matrix.event_value == 0) {
-                    Matrix.templates = { plain: recovery_plain, html: recovery_html }
-                } else {
-                    throw {
-                        name: "UnknownEventError",
-                        message: "Unknown event",
+                Matrix.severity = parseInt(Matrix.severity)
+                Matrix.is_problem = parseInt(Matrix.is_problem)
+                Matrix.is_update = parseInt(Matrix.is_update)
+
+                if (Matrix.is_problem == 1) {
+                    if (Matrix.is_update == 0) {
+                        Matrix.kind = 'problem'
+                        Matrix.color = severity_colors[Matrix.severity]
+                    } else {
+                        Matrix.kind = 'update'
+                        Matrix.color = update_color
                     }
+                } else {
+                    Matrix.kind = 'recovery'
+                    Matrix.color = recovery_color
                 }
             },
 
             request: function (path, payload) {
-                var request = new CurlHttpRequest();
-                request.AddHeader("Content-Type: application/json");
-                request.AddHeader("Authorization: Bearer " + Matrix.token);
+                var request = new CurlHttpRequest()
+                request.AddHeader('Content-Type: application/json')
+                request.AddHeader('Authorization: Bearer ' + Matrix.token)
 
-                var url = Matrix.server_url + path;
+                var url = Matrix.server + path
 
-                Zabbix.Log(4, "[Matrix Webhook] new request to: " + url);
+                Zabbix.Log(4, '[Matrix Webhook] new request to: ' + url)
 
-                var blob = request.Post(url, JSON.stringify(payload));
+                var blob = request.Post(url, JSON.stringify(payload))
 
                 if (request.Status() !== 200) {
-                    var resp = JSON.parse(blob);
-                    Zabbix.Log(4, "[Matrix Webhook] Request failed: " + resp);
-                    throw "Request failed: " + request.Status() + " " + resp.error;
+                    var resp = JSON.parse(blob)
+                    throw 'Request failed: ' + request.Status() + ' ' + resp.error
                 }
             },
 
             sendMessage: function () {
+                Matrix.messageFormatted = '<span data-mx-color="' + Matrix.color + '">'
+                    + Matrix.message.replace(/\n/g, '<br>')
+                    + '</span>'
+
                 Matrix.request(
-                    "/_matrix/client/r0/rooms/" + Matrix.room_id + "/send/m.room.message",
+                    '/_matrix/client/r0/rooms/' + Matrix.room + '/send/m.room.message',
                     {
-                        msgtype: "m.text",
-                        body: Matrix.templates.plain(Matrix),
-                        format: "org.matrix.custom.html",
-                        formatted_body: Matrix.templates.html(Matrix),
+                        msgtype: 'm.text',
+                        body: Matrix.message,
+                        format: 'org.matrix.custom.html',
+                        formatted_body: Matrix.messageFormatted,
                     }
                 )
-            }
+            },
         }
 
         try {
-            var params = JSON.parse(value);
+            var params = JSON.parse(value)
 
             Matrix.validate(params)
             Matrix.sendMessage()
 
-            return "OK"
+            return 'OK'
         } catch (error) {
-            Zabbix.Log(4, "[Matrix Webhook] Error: " + error);
-            throw "Sending failed: " + error;
+            Zabbix.Log(4, '[Matrix Webhook] Error: ' + error)
+            throw 'Sending failed: ' + error
         }

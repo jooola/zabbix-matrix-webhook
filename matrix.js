@@ -69,8 +69,18 @@ var Matrix = {
 
         if (request.Status() !== 200) {
             var resp = JSON.parse(blob)
+
+            if (request.Status() == 403 && resp.error.indexOf('not in room') !== -1) {
+                throw 'User is not in room'
+            }
+
+            Zabbix.Log(4, '[Matrix Webhook] Request failed: ' + resp.error)
             throw 'Request failed: ' + request.Status() + ' ' + resp.error
         }
+    },
+
+    joinRoom: function () {
+        Matrix.request('/_matrix/client/r0/rooms/' + Matrix.room + '/join', {})
     },
 
     sendMessage: function () {
@@ -94,7 +104,17 @@ try {
     var params = JSON.parse(value)
 
     Matrix.validate(params)
-    Matrix.sendMessage()
+
+    try {
+        Matrix.sendMessage()
+    } catch (error) {
+        if (error == 'User is not in room') {
+            Matrix.joinRoom()
+            Matrix.sendMessage()
+        } else {
+            throw error;
+        }
+    }
 
     return 'OK'
 } catch (error) {

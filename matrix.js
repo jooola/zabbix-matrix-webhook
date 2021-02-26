@@ -106,20 +106,24 @@ var Matrix = {
             if (key in params && params[key] != undefined) {
                 Object.defineProperty(Matrix, key, { value: params[key] })
             } else {
-                throw "Missing value for key: " + key;
+                throw {
+                    name: "MissingValueError",
+                    message: "Missing value for key: " + key
+                }
             }
         })
 
-        // 0 problem/recovery - 1 update
-        if (Matrix.event_update_status == 0) {
-            // 0 recovery - 1 problem
-            if (Matrix.event_value == 0) {
-                Matrix.templates = { plain: recovery_plain, html: recovery_html }
-            } else {
-                Matrix.templates = { plain: problem_plain, html: problem_html }
-            }
-        } else {
+        if (Matrix.event_value == 1 && Matrix.event_update_status == 0) {
+            Matrix.templates = { plain: problem_plain, html: problem_html }
+        } else if (Matrix.event_value == 1 && Matrix.event_update_status == 1) {
             Matrix.templates = { plain: update_plain, html: update_html }
+        } else if (Matrix.event_value == 0) {
+            Matrix.templates = { plain: recovery_plain, html: recovery_html }
+        } else {
+            throw {
+                name: "UnknownEventError",
+                message: "Unknown event",
+            }
         }
     },
 

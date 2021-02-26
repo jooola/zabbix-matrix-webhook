@@ -46,6 +46,10 @@ var Matrix = {
             Matrix.kind = 'recovery'
             Matrix.color = recovery_color
         }
+
+        if (typeof params.HTTPProxy === 'string' && params.HTTPProxy.trim() !== '') {
+            Matrix.http_proxy = params.HTTPProxy
+        }
     },
 
     request: function (path, payload) {
@@ -56,6 +60,10 @@ var Matrix = {
         var url = Matrix.server + path
 
         Zabbix.Log(4, '[Matrix Webhook] new request to: ' + url)
+
+        if (Matrix.http_proxy != undefined) {
+            request.setProxy(Matrix.http_proxy);
+        }
 
         var blob = request.Post(url, JSON.stringify(payload))
 

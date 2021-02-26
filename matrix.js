@@ -110,14 +110,16 @@ var Matrix = {
             }
         })
 
-        if (Matrix.event_value == 0) {
-            Matrix.templates = { plain: recovery_plain, html: recovery_html }
-        } else {
-            if (Matrix.event_update_status == 0) {
-                Matrix.templates = { plain: problem_plain, html: problem_html }
+        // 0 problem/recovery - 1 update
+        if (Matrix.event_update_status == 0) {
+            // 0 recovery - 1 problem
+            if (Matrix.event_value == 0) {
+                Matrix.templates = { plain: recovery_plain, html: recovery_html }
             } else {
-                Matrix.templates = { plain: update_plain, html: update_html }
+                Matrix.templates = { plain: problem_plain, html: problem_html }
             }
+        } else {
+            Matrix.templates = { plain: update_plain, html: update_html }
         }
     },
 

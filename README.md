@@ -8,9 +8,9 @@ This guide describes how to integrate your Zabbix 4.4 installation with Matrix u
 
 ### Create a Matrix account
 
-Visite [app.element.io](https://app.element.io/) and create a new account for your bot.
+Visit [app.element.io](https://app.element.io/) and create a new account for your bot.
 
-### Retreive the bot's access token
+### Retrieve the bot's access token
 
 Open a **private/incognito** window in you browser, and sign in [app.element.io](https://app.element.io) with the bot account:
 
@@ -20,7 +20,7 @@ Open the bot account settings pages:
 
 ![](docs/matrix_access_token2.png)
 
-In the settings page, open the `Help & About` tab, scroll to the bottom `Advanced` section and click on `<click to reveal>` to retreive the access token:
+In the settings page, open the `Help & About` tab, scroll to the bottom `Advanced` section and click on `<click to reveal>` to retrieve the access token:
 
 ![](docs/matrix_access_token3.png)
 
@@ -30,7 +30,7 @@ Finally, **do not log out** (logging out invalidate the access token), instead, 
 
 Invite the bot in the room you want the alerts to be send.
 
-In the room settings page, open the `Advanced` tab and retreive the `Internal room ID`:
+In the room settings page, open the `Advanced` tab and retrieve the `Internal room ID`:
 
 ![](docs/matrix_room_id1.png)
 

@@ -9,15 +9,15 @@ const input = [
     'is_update',
 ]
 
-const update_color = '#d2d2d2'
-const recovery_color = '#86cc89'
+const update_color = '#000000'
+const recovery_color = '#098e68'
 const severity_colors = [
-    '#97aab3', // Not classified
-    '#7499ff', // Information
-    '#ffc859', // Warning
-    '#ffa059', // Average
-    '#e97659', // High
-    '#e45959', // Disaster
+    '#5a5a5a', // Not classified
+    '#2caed6', // Information
+    '#d6832c', // Warning
+    '#d6542c', // Average
+    '#d62c2c', // High
+    '#ff0000', // Disaster
 ]
 
 var Matrix = {

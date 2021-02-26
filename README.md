@@ -42,6 +42,6 @@ Sign in the bot account and accept the invitation to the room.
 
 Import the [`media_matrix.yml`](media_matrix.yml) file into your zabbix installation.
 
-Configure the `<server_url>` and `<token>` missing values in the media type configuration.
+Configure the `<server>` and `<token>` missing values in the media type configuration.
 
 Create or configure the `Matrix` media type for your user, and paste the `Internal room ID` in the `Send to` field.

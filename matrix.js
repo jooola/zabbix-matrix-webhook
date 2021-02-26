@@ -111,15 +111,12 @@ var Matrix = {
         })
 
         if (Matrix.event_value == 0) {
-            Matrix.template_plain = recovery_plain
-            Matrix.template_html = recovery_html
+            Matrix.templates = { plain: recovery_plain, html: recovery_html }
         } else {
             if (Matrix.event_update_status == 0) {
-                Matrix.template_plain = problem_plain
-                Matrix.template_html = problem_html
+                Matrix.templates = { plain: problem_plain, html: problem_html }
             } else {
-                Matrix.template_plain = update_plain
-                Matrix.template_html = problem_html
+                Matrix.templates = { plain: update_plain, html: update_html }
             }
         }
     },
@@ -147,9 +144,9 @@ var Matrix = {
             "/_matrix/client/r0/rooms/" + Matrix.room_id + "/send/m.room.message",
             {
                 msgtype: "m.text",
-                body: Matrix.template_plain(Matrix),
+                body: Matrix.templates.plain(Matrix),
                 format: "org.matrix.custom.html",
-                formatted_body: Matrix.template_html(Matrix),
+                formatted_body: Matrix.templates.html(Matrix),
             }
         )
     }

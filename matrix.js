@@ -7,6 +7,8 @@ const input = [
     'severity',
     'is_problem',
     'is_update',
+
+    'enable_colors',
 ]
 
 const update_color = '#000000'
@@ -33,6 +35,7 @@ var Matrix = {
         Matrix.severity = parseInt(Matrix.severity)
         Matrix.is_problem = parseInt(Matrix.is_problem)
         Matrix.is_update = parseInt(Matrix.is_update)
+        Matrix.enable_colors = Matrix.enable_colors.toLowerCase() == "true"
 
         if (Matrix.is_problem == 1) {
             if (Matrix.is_update == 0) {
@@ -84,19 +87,25 @@ var Matrix = {
     },
 
     sendMessage: function () {
-        Matrix.messageFormatted = '<span data-mx-color="' + Matrix.color + '">'
-            + Matrix.message.replace(/\n/g, '<br>')
-            + '</span>'
+        Matrix.message = Matrix.message.replace(/\r/g, '')
 
-        Matrix.request(
-            '/_matrix/client/r0/rooms/' + Matrix.room + '/send/m.room.message',
-            {
-                msgtype: 'm.text',
-                body: Matrix.message,
+        var payload = {
+            body: Matrix.message,
+            msgtype: 'm.text',
+        }
+
+        if (Matrix.enable_colors) {
+            Matrix.messageFormatted = '<span data-mx-color="' + Matrix.color + '">'
+                + Matrix.message.replace(/\n/g, '<br>')
+                + '</span>'
+
+            payload = Object.assign(payload, {
                 format: 'org.matrix.custom.html',
                 formatted_body: Matrix.messageFormatted,
-            }
-        )
+            });
+        }
+
+        Matrix.request('/_matrix/client/r0/rooms/' + Matrix.room + '/send/m.room.message', payload)
     },
 }
 

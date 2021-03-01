@@ -6,6 +6,8 @@ This guide describes how to integrate your Zabbix 4.4 installation with Matrix u
 
 ## Matrix configuration
 
+The configuration of the webhook use [Element](https://element.io/) to interact with the Matrix server, but receiving notification from Zabbix work with any [Matrix client](https://matrix.org/clients/).
+
 ### Create a Matrix account
 
 Visit [app.element.io](https://app.element.io/) and create a new account for your bot.

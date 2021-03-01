@@ -4,6 +4,9 @@ zabbix_export:
   media_types:
     - name: Matrix
       type: WEBHOOK
+      description: |
+        https://github.com/jooola/zabbix-matrix-webhook#readme
+
       parameters:
         - name: server
           value: "<server>"

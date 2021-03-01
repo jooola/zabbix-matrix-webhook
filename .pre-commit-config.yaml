@@ -18,11 +18,17 @@ repos:
     hooks:
       - id: codespell
 
+  - repo: "https://github.com/pre-commit/mirrors-prettier"
+    rev: v2.2.1
+    hooks:
+      - id: prettier
+        files: \.(md)$
+
   - repo: local
     hooks:
-      - id: zabbix-template
-        name: Zabbix template
-        description: Check that the Zabbix template file up to date
+      - id: zabbix-file
+        name: zabbix file
+        description: Check that the Zabbix import file is up to date
         entry: build.sh
         language: script
         pass_filenames: false

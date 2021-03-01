@@ -22,7 +22,7 @@ zabbix_export:
           value: "{EVENT.UPDATE.STATUS}"
 
         - name: enable_colors
-          value: "false"
+          value: "true"
 
       message_templates:
         - event_source: TRIGGERS

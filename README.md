@@ -38,7 +38,7 @@ In the room settings page, open the `Advanced` tab and retrieve the `Internal ro
 
 ## Zabbix webhook configuration
 
-Import the [`media_matrix.yml`](media_matrix.yml) file into your zabbix installation.
+Import the [`media_matrix.yml`](media_matrix.yml) or [`media_matrix.json`](media_matrix.json) file into your zabbix installation.
 
 Configure the `<server>` and `<token>` missing values in the media type configuration.
 

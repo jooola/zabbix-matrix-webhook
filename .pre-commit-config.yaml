@@ -9,7 +9,6 @@ repos:
       - id: check-case-conflict
       - id: check-executables-have-shebangs
       - id: check-yaml
-      - id: end-of-file-fixer
       - id: mixed-line-ending
       - id: trailing-whitespace
 
@@ -28,8 +27,9 @@ repos:
     hooks:
       - id: zabbix-file
         name: zabbix file
-        description: Check that the Zabbix import file is up to date
-        entry: build.sh
-        language: script
+        description: Check that the Zabbix import files are up to date
+        entry: regenerate
+        language: node
+        additional_dependencies: ["."]
         pass_filenames: false
         always_run: true

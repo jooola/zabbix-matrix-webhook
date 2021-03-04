@@ -6,15 +6,13 @@ zabbix_export:
       type: WEBHOOK
       description: |
         https://github.com/jooola/zabbix-matrix-webhook#readme
-
       parameters:
         - name: server
-          value: "<server>"
+          value: <server>
         - name: token
-          value: "<token>"
+          value: <token>
         - name: room
           value: "{ALERT.SENDTO}"
-
         - name: message
           value: "{ALERT.MESSAGE}"
         - name: severity
@@ -23,10 +21,8 @@ zabbix_export:
           value: "{EVENT.VALUE}"
         - name: is_update
           value: "{EVENT.UPDATE.STATUS}"
-
         - name: enable_colors
           value: "true"
-
       message_templates:
         - event_source: TRIGGERS
           operation_mode: PROBLEM

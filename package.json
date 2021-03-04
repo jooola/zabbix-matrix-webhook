@@ -1,0 +1,13 @@
+{
+  "name": "zabbix-matrix-webhook",
+  "version": "1.0.0",
+  "repository": "https://github.com:jooola/zabbix-matrix-webhook",
+  "license": "GPL-3.0-or-later",
+  "type": "module",
+  "bin": {
+    "regenerate": "./regenerate.js"
+  },
+  "dependencies": {
+    "js-yaml": "^4.0.0"
+  }
+}

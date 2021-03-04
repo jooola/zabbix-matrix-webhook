@@ -27,9 +27,8 @@ repos:
     hooks:
       - id: zabbix-file
         name: zabbix file
-        description: Check that the Zabbix import files are up to date
-        entry: regenerate
-        language: node
-        additional_dependencies: ["."]
+        description: Check that the Zabbix import file are up to date
+        entry: regenerate.js
+        language: script
         pass_filenames: false
         always_run: true

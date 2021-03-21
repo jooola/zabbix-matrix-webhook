@@ -43,6 +43,6 @@ Import the [`media_matrix.yml`](media_matrix.yml) or [`media_matrix.json`](media
 - Prior to Zabbix versions 5.2: Import the [`media_matrix.json`](media_matrix.json) JSON file, YAML import is not supported.
 - Prior to Zabbix versions 5.0: Remove the `message_templates` section from the import file.
 
-Configure the `<server>` and `<token>` missing values in the media type configuration.
+In the media type configuration, fill the `<server>` value with the Matrix server [URL](https://en.wikipedia.org/wiki/URL) and `<token>` with the previously retrieved access token.
 
 Create or configure the `Matrix` media type for your user, and paste the `Internal room ID` in the `Send to` field.

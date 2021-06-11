@@ -1,6 +1,6 @@
 # Zabbix Matrix webhook
 
-![CI](https://github.com/jooola/zabbix-matrix-webhook/actions/workflows/ci.yml/badge.svg)
+[![CI](https://github.com/jooola/zabbix-matrix-webhook/actions/workflows/ci.yml/badge.svg)](https://github.com/jooola/zabbix-matrix-webhook/actions/workflows/ci.yml)
 
 This guide describes how to integrate your Zabbix 4.4 installation with Matrix using the Zabbix webhook feature. This guide will provide instructions on setting up a media type.
 
@@ -28,9 +28,9 @@ In the settings page, open the `Help & About` tab, scroll to the bottom `Advance
 
 Finally, **do not log out** (logging out invalidate the access token), instead, just close the **private/incognito** window.
 
-### Setup a Matrix room
+### Set up a Matrix room
 
-Invite the bot in the room you want the alerts to be send.
+Invite the bot in the room you want the alerts to be sent.
 
 In the room settings page, open the `Advanced` tab and retrieve the `Internal room ID`:
 

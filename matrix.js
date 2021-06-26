@@ -32,10 +32,6 @@ var Matrix = {
       }
     })
 
-    if (Matrix.token.indexOf(":") !== -1) {
-      Matrix.token = Matrix.token.split(":")[0]
-    }
-
     Matrix.severity = parseInt(Matrix.severity)
     Matrix.is_problem = parseInt(Matrix.is_problem)
     Matrix.is_update = parseInt(Matrix.is_update)

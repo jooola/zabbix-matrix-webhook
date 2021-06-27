@@ -45,4 +45,6 @@ Import the [`media_matrix.yml`](media_matrix.yml) or [`media_matrix.json`](media
 
 In the media type configuration, fill the `<server>` value with the Matrix server [URL](https://en.wikipedia.org/wiki/URL) and `<token>` with the previously retrieved access token.
 
-Create or configure the `Matrix` media type for your user, and paste the `Internal room ID` in the `Send to` field.
+Create or configure the `Matrix` media type for your user, and paste the `Internal room ID` in the `Send to` field:
+
+![](docs/zabbix_room_id1.png)

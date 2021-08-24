@@ -38,13 +38,15 @@ In the room settings page, open the `Advanced` tab and retrieve the `Internal ro
 
 ## Zabbix webhook configuration
 
-Import the [`media_matrix.yml`](media_matrix.yml) or [`media_matrix.json`](media_matrix.json) file into your zabbix installation. Depending on the Zabbix server version, you might need to tweak the file before importing it.
+First, [import](https://www.zabbix.com/documentation/current/manual/xml_export_import/media#importing) the [`media_matrix.yml`](media_matrix.yml) or [`media_matrix.json`](media_matrix.json) file into your zabbix installation. Depending on the Zabbix server version, you might need to tweak the file before importing it.
 
 - Prior to Zabbix versions 5.2: Import the [`media_matrix.json`](media_matrix.json) JSON file, YAML import is not supported.
 - Prior to Zabbix versions 5.0: Remove the `message_templates` section from the import file.
 
-In the media type configuration, fill the `<server>` value with the Matrix server [URL](https://en.wikipedia.org/wiki/URL) and `<token>` with the previously retrieved access token.
+Then, in the media type configuration, fill the `<server>` value with the Matrix server [URL](https://en.wikipedia.org/wiki/URL) and `<token>` with the previously retrieved access token.
 
-Create or configure the `Matrix` media type for your user, and paste the `Internal room ID` in the `Send to` field:
+![](docs/zabbix_media_type1.png)
+
+Finally, create or configure the `Matrix` media type for your user, and paste the `Internal room ID` in the `Send to` field:
 
 ![](docs/zabbix_room_id1.png)

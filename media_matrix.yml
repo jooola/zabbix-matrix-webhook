@@ -23,6 +23,8 @@ zabbix_export:
           value: "{EVENT.UPDATE.STATUS}"
         - name: enable_colors
           value: "true"
+        - name: http_proxy
+          value: ""
       message_templates:
         - event_source: TRIGGERS
           operation_mode: PROBLEM
@@ -57,7 +59,7 @@ zabbix_export:
             Age: {EVENT.AGE}
             Acknowledged: {EVENT.ACK.STATUS}
       script: |
-        const input = [
+        const required_input = [
           "server",
           "room",
           "token",
@@ -83,7 +85,7 @@ zabbix_export:
 
         var Matrix = {
           validate: function (params) {
-            input.forEach(function (key) {
+            required_input.forEach(function (key) {
               if (key in params && params[key] != undefined) {
                 Matrix[key] = params[key]
               } else {
@@ -109,8 +111,8 @@ zabbix_export:
               Matrix.color = recovery_color
             }
 
-            if (typeof params.HTTPProxy === "string" && params.HTTPProxy.trim() !== "") {
-              Matrix.http_proxy = params.HTTPProxy
+            if (typeof params.http_proxy === "string" && params.http_proxy.trim() !== "") {
+              Matrix.http_proxy = params.http_proxy
             }
           },
 
@@ -124,7 +126,7 @@ zabbix_export:
             Zabbix.Log(4, "[Matrix Webhook] new request to: " + url)
 
             if (Matrix.http_proxy != undefined) {
-              request.setProxy(Matrix.http_proxy)
+              request.SetProxy(Matrix.http_proxy)
             }
 
             var blob = request.Post(url, JSON.stringify(payload))

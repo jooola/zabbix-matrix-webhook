@@ -2,7 +2,10 @@
 
 [![CI](https://github.com/jooola/zabbix-matrix-webhook/actions/workflows/ci.yml/badge.svg)](https://github.com/jooola/zabbix-matrix-webhook/actions/workflows/ci.yml)
 
-This guide describes how to integrate your Zabbix 4.4 installation with Matrix using the Zabbix webhook feature. This guide will provide instructions on setting up a media type.
+This guide describes how to integrate your Zabbix installation with Matrix using the Zabbix webhook feature. This guide will provide instructions on setting up a media type.
+
+- Use the [main branch](https://github.com/jooola/zabbix-matrix-webhook/tree/main) for Zabbix 6.0 LTS and 6.2.
+- USe the [5.0 branch](https://github.com/jooola/zabbix-matrix-webhook/tree/5.0) for Zabbix 5.0 LTS.
 
 ## Matrix configuration
 
@@ -43,10 +46,7 @@ In order to configure the webhook, you will have to know:
 - [How to import media types](https://www.zabbix.com/documentation/current/manual/xml_export_import/media)
 - [How to configure webhooks](https://www.zabbix.com/documentation/current/manual/config/notifications/media/webhook)
 
-First, [import](https://www.zabbix.com/documentation/current/manual/xml_export_import/media#importing) the [`media_matrix.yml`](media_matrix.yml) or [`media_matrix.json`](media_matrix.json) file into your zabbix installation. Depending on the Zabbix server version, you might need to tweak the file before importing it.
-
-- Prior to Zabbix versions 5.2: Import the [`media_matrix.json`](media_matrix.json) JSON file, YAML import is not supported.
-- Prior to Zabbix versions 5.0: Remove the `message_templates` section from the import file.
+First, [import](https://www.zabbix.com/documentation/current/manual/xml_export_import/media#importing) the [`media_matrix.yml`](media_matrix.yml) file into your zabbix installation.
 
 Then, in the media type configuration, fill the `<server>` value with the Matrix server [URL](https://en.wikipedia.org/wiki/URL) and `<token>` with the previously retrieved access token.
 

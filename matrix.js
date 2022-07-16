@@ -56,7 +56,7 @@ var Matrix = {
   },
 
   request: function (path, payload) {
-    var request = new CurlHttpRequest()
+    var request = new HttpRequest()
     request.AddHeader("Content-Type: application/json")
     request.AddHeader("Authorization: Bearer " + Matrix.token)
 

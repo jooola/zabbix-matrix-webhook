@@ -5,7 +5,7 @@
 This guide describes how to integrate your Zabbix installation with Matrix using the Zabbix webhook feature. This guide will provide instructions on setting up a media type.
 
 - Use the [main branch](https://github.com/jooola/zabbix-matrix-webhook/tree/main) for Zabbix 6.0 LTS and 6.2.
-- USe the [5.0 branch](https://github.com/jooola/zabbix-matrix-webhook/tree/5.0) for Zabbix 5.0 LTS.
+- Use the [5.0 branch](https://github.com/jooola/zabbix-matrix-webhook/tree/5.0) for Zabbix 5.0 LTS.
 
 ## Matrix configuration
 

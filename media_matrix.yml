@@ -118,28 +118,28 @@ zabbix_export:
 
           request: function (path, payload) {
             var request = new HttpRequest()
-            request.AddHeader("Content-Type: application/json")
-            request.AddHeader("Authorization: Bearer " + Matrix.token)
+            request.addHeader("Content-Type: application/json")
+            request.addHeader("Authorization: Bearer " + Matrix.token)
 
             var url = Matrix.server + path
 
             Zabbix.Log(4, "[Matrix Webhook] new request to: " + url)
 
             if (Matrix.http_proxy != undefined) {
-              request.SetProxy(Matrix.http_proxy)
+              request.setProxy(Matrix.http_proxy)
             }
 
-            var blob = request.Post(url, JSON.stringify(payload))
+            var blob = request.post(url, JSON.stringify(payload))
 
-            if (request.Status() !== 200) {
+            if (request.getStatus() !== 200) {
               var resp = JSON.parse(blob)
 
-              if (request.Status() == 403 && resp.error.indexOf("not in room") !== -1) {
+              if (request.getStatus() == 403 && resp.error.indexOf("not in room") !== -1) {
                 throw "User is not in room"
               }
 
               Zabbix.Log(4, "[Matrix Webhook] Request failed: " + resp.error)
-              throw "Request failed: " + request.Status() + " " + resp.error
+              throw "Request failed: " + request.getStatus() + " " + resp.error
             }
           },
 

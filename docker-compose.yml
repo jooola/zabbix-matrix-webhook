@@ -2,7 +2,7 @@ version: "3"
 
 services:
   database:
-    image: mariadb:10.4
+    image: mariadb:10.9
     command:
       - mysqld
       - --character-set-server=utf8

@@ -37,12 +37,6 @@ services:
     depends_on:
       - postgres-server
       - zabbix-server
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8080/"]
-      interval: 10s
-      timeout: 5s
-      retries: 3
-      start_period: 30s
 
 volumes:
   postgres_data: {}

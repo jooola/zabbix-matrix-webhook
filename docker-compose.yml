@@ -1,41 +1,43 @@
-version: "3"
+---
+# For development purpose only
+version: "3.8"
 
 services:
-  database:
-    image: mariadb:10.9
-    command:
-      - mysqld
-      - --character-set-server=utf8
-      - --collation-server=utf8_bin
-      - --default-authentication-plugin=mysql_native_password
+  postgres-server:
+    image: postgres:13-alpine
     environment:
-      MYSQL_ROOT_PASSWORD: zabbix
-      MYSQL_DATABASE: zabbix
-      MYSQL_USER: zabbix
-      MYSQL_PASSWORD: zabbix
+      POSTGRES_USER: zabbix
+      POSTGRES_PASSWORD: zabbix
 
   zabbix-server:
-    image: zabbix/zabbix-server-mysql:alpine-5.2-latest
-    depends_on:
-      - database
+    image: zabbix/zabbix-server-pgsql:alpine-${ZABBIX_VERSION:-6.2}-latest
+    ports:
+      - 10051:10051
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
     environment:
-      DB_SERVER_HOST: database
-      MYSQL_ROOT_PASSWORD: zabbix
-      MYSQL_DATABASE: zabbix
-      MYSQL_USER: zabbix
-      MYSQL_PASSWORD: zabbix
+      POSTGRES_USER: zabbix
+      POSTGRES_PASSWORD: zabbix
+      ZBX_CACHEUPDATEFREQUENCY: 1
+    depends_on:
+      - postgres-server
 
   zabbix-web:
-    image: zabbix/zabbix-web-nginx-mysql:alpine-5.2-latest
-    depends_on:
-      - database
-      - zabbix-server
+    image: zabbix/zabbix-web-nginx-pgsql:alpine-${ZABBIX_VERSION:-6.2}-latest
     ports:
-      - "8080:8080"
+      - 8080:8080
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
     environment:
-      DB_SERVER_HOST: database
-      MYSQL_ROOT_PASSWORD: zabbix
-      MYSQL_DATABASE: zabbix
-      MYSQL_USER: zabbix
-      MYSQL_PASSWORD: zabbix
+      POSTGRES_USER: zabbix
+      POSTGRES_PASSWORD: zabbix
       ZBX_SERVER_HOST: zabbix-server
+    depends_on:
+      - postgres-server
+      - zabbix-server
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 30s

@@ -5,6 +5,8 @@ version: "3.8"
 services:
   postgres-server:
     image: postgres:13-alpine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
     environment:
       POSTGRES_USER: zabbix
       POSTGRES_PASSWORD: zabbix
@@ -41,3 +43,6 @@ services:
       timeout: 5s
       retries: 3
       start_period: 30s
+
+volumes:
+  postgres_data: {}

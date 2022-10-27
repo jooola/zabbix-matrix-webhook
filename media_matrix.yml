@@ -16,7 +16,7 @@ zabbix_export:
         - name: message
           value: "{ALERT.MESSAGE}"
         - name: severity
-          value: "{EVENT.NSEVERITY}"
+          value: "{EVENT.SEVERITY}"
         - name: is_problem
           value: "{EVENT.VALUE}"
         - name: is_update

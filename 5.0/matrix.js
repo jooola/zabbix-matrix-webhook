@@ -3,6 +3,7 @@ const required_input = [
   "room",
   "token",
 
+  "subject",
   "message",
   "severity",
   "is_problem",
@@ -31,6 +32,9 @@ var Matrix = {
         throw "Missing value for key: " + key
       }
     })
+
+    Matrix.subject = Matrix.subject.replace(/\r/g, "")
+    Matrix.message = Matrix.message.replace(/\r/g, "")
 
     Matrix.severity = parseInt(Matrix.severity)
     Matrix.is_problem = parseInt(Matrix.is_problem)
@@ -87,25 +91,29 @@ var Matrix = {
   },
 
   sendMessage: function () {
-    Matrix.message = Matrix.message.replace(/\r/g, "")
+    var body = ""
+    body += Matrix.subject + "\n"
+    body += Matrix.message
 
-    var payload = {
-      body: Matrix.message,
-      msgtype: "m.text",
+    var formatted_body = ""
+    if (Matrix.enable_colors) {
+      formatted_body += '<span data-mx-color="{color}">'.replace("{color}", Matrix.color)
+    } else {
+      formatted_body += "<span>"
     }
 
-    if (Matrix.enable_colors) {
-      Matrix.messageFormatted =
-        '<span data-mx-color="' +
-        Matrix.color +
-        '">' +
-        Matrix.message.replace(/\n/g, "<br>") +
-        "</span>"
+    formatted_body += "<strong>"
+    formatted_body += Matrix.subject
+    formatted_body += "</strong><br />"
 
-      payload = Object.assign(payload, {
-        format: "org.matrix.custom.html",
-        formatted_body: Matrix.messageFormatted,
-      })
+    formatted_body += Matrix.message.replace(/\n/g, "<br />")
+    formatted_body += "</span>"
+
+    const payload = {
+      body: body,
+      msgtype: "m.text",
+      format: "org.matrix.custom.html",
+      formatted_body: formatted_body,
     }
 
     Matrix.request("/_matrix/client/r0/rooms/" + Matrix.room + "/send/m.room.message", payload)

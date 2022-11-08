@@ -1,13 +1,14 @@
 const required_input = [
-  "server",
-  "room",
-  "token",
+  "matrix_url",
+  "matrix_room",
+  "matrix_token",
 
-  "subject",
-  "message",
-  "severity",
-  "is_problem",
-  "is_update",
+  "alert_subject",
+  "alert_message",
+
+  "event_severity",
+  "event_is_problem",
+  "event_is_update",
 
   "enable_colors",
   "enable_icons",
@@ -43,12 +44,13 @@ var Matrix = {
       }
     })
 
-    Matrix.subject = Matrix.subject.replace(/\r/g, "")
-    Matrix.message = Matrix.message.replace(/\r/g, "")
+    Matrix.alert_subject = Matrix.alert_subject.replace(/\r/g, "")
+    Matrix.alert_message = Matrix.alert_message.replace(/\r/g, "")
 
-    Matrix.severity = parseInt(Matrix.severity)
-    Matrix.is_problem = parseInt(Matrix.is_problem)
-    Matrix.is_update = parseInt(Matrix.is_update)
+    Matrix.event_severity = parseInt(Matrix.event_severity)
+    Matrix.event_is_problem = parseInt(Matrix.event_is_problem)
+    Matrix.event_is_update = parseInt(Matrix.event_is_update)
+
     Matrix.enable_colors = Matrix.enable_colors.toLowerCase() == "true"
     Matrix.enable_icons = Matrix.enable_icons.toLowerCase() == "true"
 
@@ -56,11 +58,11 @@ var Matrix = {
       Matrix.http_proxy = params.http_proxy
     }
 
-    if (Matrix.is_problem == 1) {
-      if (Matrix.is_update == 0) {
+    if (Matrix.event_is_problem == 1) {
+      if (Matrix.event_is_update == 0) {
         Matrix.kind = "problem"
-        Matrix.color = severity_colors[Matrix.severity]
-        Matrix.icon = severity_icons[Matrix.severity]
+        Matrix.color = severity_colors[Matrix.event_severity]
+        Matrix.icon = severity_icons[Matrix.event_severity]
       } else {
         Matrix.kind = "update"
         Matrix.color = update_color
@@ -76,9 +78,9 @@ var Matrix = {
   request: function (path, payload) {
     var request = new CurlHttpRequest()
     request.AddHeader("Content-Type: application/json")
-    request.AddHeader("Authorization: Bearer " + Matrix.token)
+    request.AddHeader("Authorization: Bearer " + Matrix.matrix_token)
 
-    var url = Matrix.server + path
+    var url = Matrix.matrix_url + path
 
     Zabbix.Log(4, "[Matrix Webhook] new request to: " + url)
 
@@ -101,7 +103,7 @@ var Matrix = {
   },
 
   joinRoom: function () {
-    Matrix.request("/_matrix/client/r0/rooms/" + Matrix.room + "/join", {})
+    Matrix.request("/_matrix/client/r0/rooms/" + Matrix.matrix_room + "/join", {})
   },
 
   sendMessage: function () {
@@ -109,8 +111,8 @@ var Matrix = {
     if (Matrix.enable_icons && Matrix.icon) {
       body += Matrix.icon + " "
     }
-    body += Matrix.subject + "\n"
-    body += Matrix.message
+    body += Matrix.alert_subject + "\n"
+    body += Matrix.alert_message
 
     var formatted_body = ""
     if (Matrix.enable_colors) {
@@ -123,10 +125,10 @@ var Matrix = {
     if (Matrix.enable_icons && Matrix.icon) {
       formatted_body += Matrix.icon + " "
     }
-    formatted_body += Matrix.subject
+    formatted_body += Matrix.alert_subject
     formatted_body += "</strong><br />"
 
-    formatted_body += Matrix.message.replace(/\n/g, "<br />")
+    formatted_body += Matrix.alert_message.replace(/\n/g, "<br />")
     formatted_body += "</span>"
 
     const payload = {
@@ -136,7 +138,10 @@ var Matrix = {
       formatted_body: formatted_body,
     }
 
-    Matrix.request("/_matrix/client/r0/rooms/" + Matrix.room + "/send/m.room.message", payload)
+    Matrix.request(
+      "/_matrix/client/r0/rooms/" + Matrix.matrix_room + "/send/m.room.message",
+      payload
+    )
   },
 }
 

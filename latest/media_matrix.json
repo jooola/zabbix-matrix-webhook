@@ -58,13 +58,13 @@
             "event_source": "TRIGGERS",
             "operation_mode": "PROBLEM",
             "subject": "Problem: {EVENT.NAME}",
-            "message": "Problem started at {EVENT.TIME} on {EVENT.DATE}\nProblem name: {EVENT.NAME}\nHost: {HOST.NAME}\nSeverity: {EVENT.SEVERITY}\nOperational data: {EVENT.OPDATA}\nOriginal problem ID: {EVENT.ID}\n{TRIGGER.URL}\n"
+            "message": "Problem started at {EVENT.TIME} on {EVENT.DATE}\nHost: {HOST.NAME}\nSeverity: {EVENT.SEVERITY}\nProblem ID: {EVENT.ID}\n"
           },
           {
             "event_source": "TRIGGERS",
             "operation_mode": "RECOVERY",
             "subject": "Resolved in {EVENT.DURATION}: {EVENT.NAME}",
-            "message": "Problem has been resolved at {EVENT.RECOVERY.TIME} on {EVENT.RECOVERY.DATE}\nProblem name: {EVENT.NAME}\nProblem duration: {EVENT.DURATION}\nHost: {HOST.NAME}\nSeverity: {EVENT.SEVERITY}\nOriginal problem ID: {EVENT.ID}\n{TRIGGER.URL}\n"
+            "message": "Problem has been resolved at {EVENT.RECOVERY.TIME} on {EVENT.RECOVERY.DATE}\nHost: {HOST.NAME}\nSeverity: {EVENT.SEVERITY}\nProblem ID: {EVENT.ID}\n"
           },
           {
             "event_source": "TRIGGERS",

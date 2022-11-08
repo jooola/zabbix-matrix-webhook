@@ -4,9 +4,6 @@
 
 This guide describes how to integrate your Zabbix installation with Matrix using the Zabbix webhook feature. This guide will provide instructions on setting up a media type.
 
-- Use the [main branch](https://github.com/jooola/zabbix-matrix-webhook/tree/main) for Zabbix 6.0 LTS and 6.2.
-- Use the [5.0 branch](https://github.com/jooola/zabbix-matrix-webhook/tree/5.0) for Zabbix 5.0 LTS.
-
 ## Matrix configuration
 
 The configuration of the webhook use [Element](https://element.io/) to interact with the Matrix server, but receiving notification from Zabbix work with any [Matrix client](https://matrix.org/clients/).
@@ -46,7 +43,10 @@ In order to configure the webhook, you will have to know:
 - [How to import media types](https://www.zabbix.com/documentation/current/manual/xml_export_import/media)
 - [How to configure webhooks](https://www.zabbix.com/documentation/current/manual/config/notifications/media/webhook)
 
-First, [import](https://www.zabbix.com/documentation/current/manual/xml_export_import/media#importing) the [`media_matrix.yml`](media_matrix.yml) file into your zabbix installation.
+First, [import](https://www.zabbix.com/documentation/current/manual/xml_export_import/media#importing) the Matrix webhook into your Zabbix installation:
+
+- Use the [`latest/media_matrix.yml`](latest/media_matrix.yml) file for Zabbix 6.0 LTS and 6.2.
+- Use the [`5.0/media_matrix.json`](5.0/media_matrix.json) file for Zabbix 5.0 LTS.
 
 Then, in the media type configuration, fill the `<server>` value with the Matrix server [URL](https://en.wikipedia.org/wiki/URL) and `<token>` with the previously retrieved access token.
 

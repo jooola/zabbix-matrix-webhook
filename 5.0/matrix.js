@@ -10,6 +10,7 @@ const required_input = [
   "is_update",
 
   "enable_colors",
+  "enable_icons",
 ]
 
 const update_color = "#000000"
@@ -21,6 +22,15 @@ const severity_colors = [
   "#d6542c", // Average
   "#d62c2c", // High
   "#ff0000", // Disaster
+]
+const recovery_icon = String.fromCodePoint("0x2705")
+const severity_icons = [
+  String.fromCodePoint("0x2754"), // Not classified
+  String.fromCodePoint("0x2139"), // Information
+  String.fromCodePoint("0x26A0"), // Warning
+  String.fromCodePoint("0x274C"), // Average
+  String.fromCodePoint("0x1F525"), // High
+  String.fromCodePoint("0x1F4A5"), // Disaster
 ]
 
 var Matrix = {
@@ -40,18 +50,22 @@ var Matrix = {
     Matrix.is_problem = parseInt(Matrix.is_problem)
     Matrix.is_update = parseInt(Matrix.is_update)
     Matrix.enable_colors = Matrix.enable_colors.toLowerCase() == "true"
+    Matrix.enable_icons = Matrix.enable_icons.toLowerCase() == "true"
 
     if (Matrix.is_problem == 1) {
       if (Matrix.is_update == 0) {
         Matrix.kind = "problem"
         Matrix.color = severity_colors[Matrix.severity]
+        Matrix.icon = severity_icons[Matrix.severity]
       } else {
         Matrix.kind = "update"
         Matrix.color = update_color
+        Matrix.icon = false
       }
     } else {
       Matrix.kind = "recovery"
       Matrix.color = recovery_color
+      Matrix.icon = recovery_icon
     }
 
     if (typeof params.http_proxy === "string" && params.http_proxy.trim() !== "") {
@@ -92,6 +106,9 @@ var Matrix = {
 
   sendMessage: function () {
     var body = ""
+    if (Matrix.enable_icons && Matrix.icon) {
+      body += Matrix.icon + " "
+    }
     body += Matrix.subject + "\n"
     body += Matrix.message
 
@@ -103,6 +120,9 @@ var Matrix = {
     }
 
     formatted_body += "<strong>"
+    if (Matrix.enable_icons && Matrix.icon) {
+      formatted_body += Matrix.icon + " "
+    }
     formatted_body += Matrix.subject
     formatted_body += "</strong><br />"
 

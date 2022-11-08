@@ -52,6 +52,10 @@ var Matrix = {
     Matrix.enable_colors = Matrix.enable_colors.toLowerCase() == "true"
     Matrix.enable_icons = Matrix.enable_icons.toLowerCase() == "true"
 
+    if (typeof params.http_proxy === "string" && params.http_proxy.trim() !== "") {
+      Matrix.http_proxy = params.http_proxy
+    }
+
     if (Matrix.is_problem == 1) {
       if (Matrix.is_update == 0) {
         Matrix.kind = "problem"
@@ -66,10 +70,6 @@ var Matrix = {
       Matrix.kind = "recovery"
       Matrix.color = recovery_color
       Matrix.icon = recovery_icon
-    }
-
-    if (typeof params.http_proxy === "string" && params.http_proxy.trim() !== "") {
-      Matrix.http_proxy = params.http_proxy
     }
   },
 

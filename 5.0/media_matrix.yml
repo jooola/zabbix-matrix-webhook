@@ -34,21 +34,21 @@ zabbix_export:
       message_templates:
         - event_source: TRIGGERS
           operation_mode: PROBLEM
-          subject: "Problem: {EVENT.NAME}"
+          subject: "{EVENT.NAME}"
           message: |
             Problem {EVENT.ID} started at {EVENT.TIME} on {EVENT.DATE}
             Host: {HOST.NAME}
             Severity: {EVENT.SEVERITY}
         - event_source: TRIGGERS
           operation_mode: RECOVERY
-          subject: "Resolved in {EVENT.DURATION}: {EVENT.NAME}"
+          subject: "{EVENT.NAME} ({EVENT.DURATION})"
           message: |
             Problem {EVENT.ID} resolved at {EVENT.RECOVERY.TIME} on {EVENT.RECOVERY.DATE}
             Host: {HOST.NAME}
             Severity: {EVENT.SEVERITY}
         - event_source: TRIGGERS
           operation_mode: UPDATE
-          subject: "Updated problem in {EVENT.AGE}: {EVENT.NAME}"
+          subject: "{EVENT.NAME} ({EVENT.AGE})"
           message: |
             {USER.FULLNAME} {EVENT.UPDATE.ACTION} problem at {EVENT.UPDATE.DATE} {EVENT.UPDATE.TIME}
             {EVENT.UPDATE.MESSAGE}

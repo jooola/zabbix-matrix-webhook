@@ -34,18 +34,16 @@ zabbix_export:
           operation_mode: PROBLEM
           subject: "Problem: {EVENT.NAME}"
           message: |
-            Problem started at {EVENT.TIME} on {EVENT.DATE}
+            Problem {EVENT.ID} started at {EVENT.TIME} on {EVENT.DATE}
             Host: {HOST.NAME}
             Severity: {EVENT.SEVERITY}
-            Problem ID: {EVENT.ID}
         - event_source: TRIGGERS
           operation_mode: RECOVERY
           subject: "Resolved in {EVENT.DURATION}: {EVENT.NAME}"
           message: |
-            Problem has been resolved at {EVENT.RECOVERY.TIME} on {EVENT.RECOVERY.DATE}
+            Problem {EVENT.ID} resolved at {EVENT.RECOVERY.TIME} on {EVENT.RECOVERY.DATE}
             Host: {HOST.NAME}
             Severity: {EVENT.SEVERITY}
-            Problem ID: {EVENT.ID}
         - event_source: TRIGGERS
           operation_mode: UPDATE
           subject: "Updated problem in {EVENT.AGE}: {EVENT.NAME}"

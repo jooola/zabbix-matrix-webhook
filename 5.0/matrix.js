@@ -24,6 +24,8 @@ const severity_colors = [
   "#d62c2c", // High
   "#ff0000", // Disaster
 ]
+
+const update_icon = String.fromCodePoint("0x1f4dd")
 const recovery_icon = String.fromCodePoint("0x2705")
 const severity_icons = [
   String.fromCodePoint("0x2754"), // Not classified
@@ -70,7 +72,7 @@ var Matrix = {
       } else {
         Matrix.kind = "update"
         Matrix.color = update_color
-        Matrix.icon = false
+        Matrix.icon = update_icon
       }
     } else {
       Matrix.kind = "recovery"

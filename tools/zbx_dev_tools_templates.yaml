@@ -1,0 +1,24 @@
+zabbix_export:
+  version: "6.2"
+  date: "2022-11-09T12:30:14Z"
+  template_groups:
+    - uuid: 7df96b18c230490a9a0a9e2307226338
+      name: Templates
+  templates:
+    - uuid: a776a7e0629249c3a3e7ff50b27937d3
+      template: "Development tools"
+      name: "Development tools"
+      groups:
+        - name: Templates
+      items:
+        - uuid: 0e91275452494931892c73f2caa151f7
+          name: "Test file exists"
+          key: "vfs.file.exists[/tmp/zabbix_test_file]"
+          delay: 5s
+          history: 1d
+          trends: "0"
+          triggers:
+            - uuid: e710aa6c37a54863a6a8cdb97f9c6df0
+              expression: "last(/Development tools/vfs.file.exists[/tmp/zabbix_test_file])=1"
+              name: "Test file is present"
+              priority: WARNING

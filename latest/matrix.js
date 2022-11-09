@@ -133,7 +133,7 @@ var Matrix = {
 
     const payload = {
       body: body,
-      msgtype: "m.text",
+      msgtype: "m.notice",
       format: "org.matrix.custom.html",
       formatted_body: formatted_body,
     }

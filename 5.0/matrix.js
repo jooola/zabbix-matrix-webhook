@@ -28,10 +28,10 @@ const recovery_icon = String.fromCodePoint("0x2705")
 const severity_icons = [
   String.fromCodePoint("0x2754"), // Not classified
   String.fromCodePoint("0x2139"), // Information
-  String.fromCodePoint("0x26A0"), // Warning
-  String.fromCodePoint("0x274C"), // Average
-  String.fromCodePoint("0x1F525"), // High
-  String.fromCodePoint("0x1F4A5"), // Disaster
+  String.fromCodePoint("0x26a0"), // Warning
+  String.fromCodePoint("0x274c"), // Average
+  String.fromCodePoint("0x1f525"), // High
+  String.fromCodePoint("0x1f4a5"), // Disaster
 ]
 
 var Matrix = {

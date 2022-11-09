@@ -23,6 +23,8 @@ zabbix_export:
           value: "{EVENT.VALUE}"
         - name: event_is_update
           value: "{EVENT.UPDATE.STATUS}"
+        - name: event_url
+          value: ""
         - name: enable_colors
           value: "true"
         - name: enable_icons
@@ -108,6 +110,10 @@ zabbix_export:
             Matrix.event_is_problem = parseInt(Matrix.event_is_problem)
             Matrix.event_is_update = parseInt(Matrix.event_is_update)
 
+            if (typeof params.event_url === "string" && params.event_url.trim() !== "") {
+              Matrix.event_url = params.event_url
+            }
+
             Matrix.enable_colors = Matrix.enable_colors.toLowerCase() == "true"
             Matrix.enable_icons = Matrix.enable_icons.toLowerCase() == "true"
 
@@ -171,6 +177,10 @@ zabbix_export:
             body += Matrix.alert_subject + "\n"
             body += Matrix.alert_message
 
+            if (Matrix.event_url != undefined) {
+              body += "\n" + Matrix.event_url
+            }
+
             var formatted_body = ""
             if (Matrix.enable_colors) {
               formatted_body += '<span data-mx-color="{color}">'.replace("{color}", Matrix.color)
@@ -182,7 +192,17 @@ zabbix_export:
             if (Matrix.enable_icons && Matrix.icon) {
               formatted_body += Matrix.icon + " "
             }
+
+            if (Matrix.event_url != undefined) {
+              formatted_body += '<a href="{href}">'.replace("{href}", Matrix.event_url)
+            }
+
             formatted_body += Matrix.alert_subject
+
+            if (Matrix.event_url != undefined) {
+              formatted_body += "</a>"
+            }
+
             formatted_body += "</strong><br />"
 
             formatted_body += Matrix.alert_message.replace(/\n/g, "<br />")

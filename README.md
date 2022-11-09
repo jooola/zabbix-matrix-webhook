@@ -50,6 +50,12 @@ First, [import](https://www.zabbix.com/documentation/current/manual/xml_export_i
 
 Then, in the media type configuration, fill the `<matrix_url>` value with the Matrix server [URL](https://en.wikipedia.org/wiki/URL) and `<matrix_token>` with the previously retrieved access token.
 
+> To add a link to the event in your alert messages, you need to fill the `event_url` parameter with the url below. Make sure that your replace `<zabbix_url>` with the url of your Zabbix server.
+>
+> ```
+> https://<zabbix_url>/tr_events.php?triggerid={TRIGGER.ID}&eventid={EVENT.ID}
+> ```
+
 ![](docs/zabbix_media_type1.png)
 
 Finally, create or configure the `Matrix` media type for your user, and paste the `Internal room ID` in the `Send to` field:

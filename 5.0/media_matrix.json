@@ -1,6 +1,6 @@
 {
   "zabbix_export": {
-    "version": "5.2",
+    "version": "5.0",
     "date": "2021-02-24T14:57:02Z",
     "media_types": [
       {

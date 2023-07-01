@@ -42,6 +42,7 @@ In order to configure the webhook, you will have to know:
 
 - [How to import media types](https://www.zabbix.com/documentation/current/manual/xml_export_import/media)
 - [How to configure webhooks](https://www.zabbix.com/documentation/current/manual/config/notifications/media/webhook)
+- [To to send messages in Zabbix](https://www.zabbix.com/documentation/current/manual/config/notifications/action/operation/message)
 
 First, [import](https://www.zabbix.com/documentation/current/manual/xml_export_import/media#importing) the Matrix webhook into your Zabbix installation:
 

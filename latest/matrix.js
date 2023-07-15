@@ -160,7 +160,7 @@ var Matrix = {
 
     Matrix.request(
       "/_matrix/client/r0/rooms/" + Matrix.matrix_room + "/send/m.room.message",
-      payload
+      payload,
     )
   },
 }

@@ -12,7 +12,7 @@ services:
       POSTGRES_PASSWORD: zabbix
 
   zabbix-server:
-    image: zabbix/zabbix-server-pgsql:alpine-${ZABBIX_VERSION:-6.2}-latest
+    image: zabbix/zabbix-server-pgsql:alpine-${ZABBIX_VERSION:-6.4}-latest
     ports:
       - 10051:10051
     volumes:
@@ -25,7 +25,7 @@ services:
       - postgres-server
 
   zabbix-web:
-    image: zabbix/zabbix-web-nginx-pgsql:alpine-${ZABBIX_VERSION:-6.2}-latest
+    image: zabbix/zabbix-web-nginx-pgsql:alpine-${ZABBIX_VERSION:-6.4}-latest
     ports:
       - 8080:8080
     volumes:

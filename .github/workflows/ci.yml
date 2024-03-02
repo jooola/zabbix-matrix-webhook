@@ -16,12 +16,5 @@ jobs:
         with:
           python-version: 3.x
       - uses: actions/setup-node@v4
-
       - run: npm ci
-
       - uses: pre-commit/action@v3.0.1
-
-      - uses: pre-commit-ci/lite-action@v1.0.2
-        if: always() && github.event_name == 'pull_request'
-        with:
-          msg: "chore: apply pre-commit fixes"

@@ -16,5 +16,5 @@ jobs:
         with:
           python-version: 3.x
       - uses: actions/setup-node@v4
-      - run: yarn
+      - run: npm ci
       - uses: pre-commit/action@v3.0.1

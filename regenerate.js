@@ -13,13 +13,10 @@ function regenerate(script_path, webhook_path, new_webhook_path) {
 
   const webhook_result = new_webhook_path.endsWith(".json")
     ? JSON.stringify(webhook, null, 2)
-    : dump(webhook, { lineWidth: -1, quotingType: '"' })
+    : dump(webhook, { lineWidth: -1, quoteStyle: "double" })
 
   writeFileSync(new_webhook_path, webhook_result)
 }
-
-regenerate("5.0/matrix.js", "5.0/media_matrix.yml", "5.0/media_matrix.yml")
-regenerate("5.0/matrix.js", "5.0/media_matrix.yml", "5.0/media_matrix.json")
 
 regenerate("latest/matrix.js", "latest/media_matrix.yml", "latest/media_matrix.yml")
 regenerate("latest/matrix.js", "latest/media_matrix.yml", "latest/media_matrix.json")

@@ -1,0 +1,23 @@
+name: Releaser-pleaser
+
+on:
+  push:
+    branches: [main]
+  pull_request_target:
+    types:
+      - edited
+      - labeled
+      - unlabeled
+
+concurrency:
+  group: releaser-pleaser
+
+jobs:
+  releaser-pleaser:
+    # Do not run on forks.
+    if: github.repository == 'jooola/zabbix-matrix-webhook'
+
+    runs-on: ubuntu-latest
+    steps:
+      - name: releaser-pleaser
+        uses: apricote/releaser-pleaser@v0.8.0

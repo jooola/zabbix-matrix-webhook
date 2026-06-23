@@ -13,7 +13,7 @@ function regenerate(script_path, webhook_path, new_webhook_path) {
 
   const webhook_result = new_webhook_path.endsWith(".json")
     ? JSON.stringify(webhook, null, 2)
-    : dump(webhook, { lineWidth: -1, quotingType: '"' })
+    : dump(webhook, { lineWidth: -1, quoteStyle: "double" })
 
   writeFileSync(new_webhook_path, webhook_result)
 }

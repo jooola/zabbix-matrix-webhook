@@ -47,7 +47,6 @@ In order to configure the webhook, you will have to know:
 First, [import](https://www.zabbix.com/documentation/current/manual/xml_export_import/media#importing) the Matrix webhook into your Zabbix installation:
 
 - Use the [`latest/media_matrix.yml`](latest/media_matrix.yml) file for Zabbix 6.0 LTS and 6.2.
-- Use the [`5.0/media_matrix.json`](5.0/media_matrix.json) file for Zabbix 5.0 LTS.
 
 Then, in the media type configuration, fill the `<matrix_url>` value with the Matrix server [URL](https://en.wikipedia.org/wiki/URL) and `<matrix_token>` with the previously retrieved access token.
 

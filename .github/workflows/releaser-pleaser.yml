@@ -21,6 +21,3 @@ jobs:
     steps:
       - name: releaser-pleaser
         uses: apricote/releaser-pleaser@v0.8.0
-        with:
-          extra-files: |
-            hcloud/hcloud.go

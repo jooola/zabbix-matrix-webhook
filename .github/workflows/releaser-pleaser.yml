@@ -20,4 +20,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: releaser-pleaser
-        uses: apricote/releaser-pleaser@v0.8.0
+        uses: apricote/releaser-pleaser@v0.9.0

@@ -100,8 +100,10 @@ var Matrix = {
     switch (method) {
       case "PUT":
         blob = request.put(url, JSON.stringify(payload))
+        break
       case "POST":
         blob = request.post(url, JSON.stringify(payload))
+        break
       default:
         throw 'Unexpected method "' + method + '"'
     }
